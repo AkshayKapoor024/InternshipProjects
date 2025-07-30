@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import TableRow from '../../components/tableRow';
-import Navbar from '../../components/navbar';
+import TableRow from '../components/tableRow';
+import Navbar from '../components/navbar';
 export default function Table() {
     const [filters, setFilters] = useState({ category: '', status: '' ,circle:''});
     const [pageSize, setPageSize] = useState(10);
