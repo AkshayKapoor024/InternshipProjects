@@ -51,12 +51,7 @@ useEffect(()=>{
       <div className='flex justify-center items-center gap-10'>
         <div className='text-sm md:text-2xl xl:text-2xl font-bold xl:w-auto h-[10vh] flex justify-center items-center'>{`Greetings!! ${user.email}`}</div>
         <div className=' w-[80px] h-[45px] xl:w-[70px] xl:h-[70px] rounded-full flex justify-center items-center'>
-          <img
-            src={user.photoURL? user.photoURL: "https://img.daisyui.com/images/profile/demo/yellingwoman@192.webp"
-            }
-            alt={user?.displayName || 'User'}
-            className="w-full h-full rounded-full object-cover"
-          />
+          <img width="48" height="48" src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="user-male-circle--v1"/>
         </div>
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn bg-gray-800 h-16 w-16  rounded-full xl:m-1 text-4xl">📂</div>
