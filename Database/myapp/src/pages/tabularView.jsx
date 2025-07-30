@@ -55,7 +55,8 @@ export default function Table() {
             setSuccess(true);
         } catch (error) {
             console.error(error);
-            toast.error(`Error: ${error.message}`);
+            const serverMessage = error.response?.data?.message || error.message;
+toast.error(`🚨 ${serverMessage}`);
         } finally {
             setLoading(false);
         }
