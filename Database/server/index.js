@@ -13,7 +13,7 @@ const { stringify } = require('csv-stringify');
 const streamifier = require('streamifier');
 const memoryUpload = multer({ storage: multer.memoryStorage() });
 const csvParser = require('csv-parser');
-
+const { logActivity } = require('./utils/activityLogger.js')
 const cors = require('cors')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -159,13 +159,29 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
       await db.execute(bulkQuery, flattened);
       await db.query('COMMIT');
 
+
+      const performedAt = new Date().toISOString();
+      const filesize = req.file.size;
+      const filename = req.file.originalname;
+      await logActivity({
+        db,
+        activity: 'Import',
+        performedAt,
+        fieldnumber: rows[0] ? Object.keys(rows[0]).length : 0,
+        filename,
+        filesize,
+      });
+
+
+
+
       res.send(`✅ CSV Upload Successful! ${rows.length} rows inserted.`);
     } catch (err) {
       console.error(`❌ CSV Import Error: ${err.message}`);
-     res.status(err.status || 500).json({
-  error: true,
-  message: err.message || 'Unknown import error'
-});
+      res.status(err.status || 500).json({
+        error: true,
+        message: err.message || 'Unknown import error'
+      });
     }
   }
 
@@ -199,13 +215,23 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
       await db.execute(bulkQuery, flattened);
       await db.query('COMMIT');
 
+      const performedAt = new Date().toISOString();
+      const filesize = req.file.size;
+      const filename = req.file.originalname;
+      await logActivity({
+        db,
+        activity: 'Import',
+        performedAt,
+        fieldnumber: rows[0] ? Object.keys(rows[0]).length : 0,
+        filename,
+        filesize,
+      });
+
+
       res.send(`✅ JSON Upload Successful! ${rows.length} rows inserted.`);
     } catch (err) {
       console.log(err)
-      res.status(err.status || 500).json({
-  error: true,
-  message: err.message || 'Unknown import error'
-});
+      res.status(err.status || 500).send(`Import failed: ${err.message}`);
     }
 
   }
@@ -213,13 +239,21 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
   else if (ext === 'sql') {
     try {
       await handleSQL(filePath, db);
+      const performedAt = new Date().toISOString();
+      const filesize = req.file.size;
+      const filename = req.file.originalname;
+      await logActivity({
+        db,
+        activity: 'Import',
+        performedAt,
+        fieldnumber: 0, // since SQL format doesn't include field count
+        filename,
+        filesize,
+      });
       res.send(`✅ SQL Executed Successfully!`);
     } catch (err) {
       console.log(err)
-      res.status(err.status || 500).json({
-  error: true,
-  message: err.message || 'Unknown import error'
-});
+      res.status(err.status || 500).send(`SQL Error: ${err.message}`);
     }
 
   }
@@ -243,6 +277,7 @@ app.post('/export/getFiles', wrapAsync(async (req, res) => {
 
     const conditions = [];
     const values = [];
+
     if (!category && !status && !circle) {
       return res.status(400).send('At least one filter must be provided');
     }
@@ -277,7 +312,11 @@ app.post('/export/getFiles', wrapAsync(async (req, res) => {
 
     const fileName = `export_${Date.now()}.${type}`;
     const exportDir = path.join(__dirname, 'exports');
-    const streamDirectly = (!category && !status && circle); // Circle-only filter
+    const streamDirectly = (!category && !status && circle);
+
+    const performedAt = new Date().toISOString();
+    const fieldnumber = Object.keys(rows[0] || {}).length;
+    let filesize = null;
 
     if (streamDirectly) {
       console.log('[EXPORT] Using direct streaming for circle-only filter');
@@ -285,31 +324,45 @@ app.post('/export/getFiles', wrapAsync(async (req, res) => {
       if (type === 'csv') {
         const parser = new Parser();
         const csv = parser.parse(rows);
+        filesize = Buffer.byteLength(csv, 'utf8');
+
+        await logActivity({ db, activity: 'Export', performedAt, fieldnumber, filename: fileName, filesize });
+
         res.setHeader('Content-Type', 'text/csv');
         res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
         return res.send(csv);
       } else {
+        const json = JSON.stringify(rows, null, 2);
+        filesize = Buffer.byteLength(json, 'utf8');
+
+        await logActivity({ db, activity: 'Export', performedAt, fieldnumber, filename: fileName, filesize });
+
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-        return res.send(JSON.stringify(rows, null, 2));
+        return res.send(json);
       }
     } else {
-      // File-based flow preserved
       if (!fs.existsSync(exportDir)) {
         fs.mkdirSync(exportDir);
         console.log('[EXPORT] Created exports directory');
       }
 
       const filePath = path.join(exportDir, fileName);
+
       if (type === 'csv') {
         const parser = new Parser();
         const csv = parser.parse(rows);
+        filesize = Buffer.byteLength(csv, 'utf8');
         fs.writeFileSync(filePath, csv);
         console.log(`[EXPORT] CSV file created: ${fileName}`);
       } else {
-        fs.writeFileSync(filePath, JSON.stringify(rows, null, 2));
+        const json = JSON.stringify(rows, null, 2);
+        filesize = Buffer.byteLength(json, 'utf8');
+        fs.writeFileSync(filePath, json);
         console.log(`[EXPORT] JSON file created: ${fileName}`);
       }
+
+      await logActivity({ db, activity: 'Export', performedAt, fieldnumber, filename: fileName, filesize });
 
       res.download(filePath, fileName, (err) => {
         if (err) console.error(`[EXPORT] Error sending ${type.toUpperCase()} file:`, err);
@@ -324,14 +377,14 @@ app.post('/export/getFiles', wrapAsync(async (req, res) => {
 }));
 
 
-app.post('/data/query', async (req, res) => {
+app.post('/data/query', wrapAsync(async (req, res) => {
   const { category, status, limit, offset, preload = false, circle } = req.body;
 
   const filters = [];
   const values = [];
-if (!category && !status && !circle) {
-  return res.status(400).send('At least one filter must be provided');
-}
+  if (!category && !status && !circle) {
+    return res.status(400).send('At least one filter must be provided');
+  }
   if (category) {
     filters.push('category = ?');
     values.push(category.trim());
@@ -347,7 +400,6 @@ if (!category && !status && !circle) {
 
   const whereClause = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
 
-  // Base query for current rows
   const query = `
     SELECT id, category, mobile, delivery_date, status,
            city, operator, state, circle,
@@ -376,10 +428,27 @@ if (!category && !status && !circle) {
   const [countRow] = await db.query(countQuery, values);
   const totalCount = countRow[0]?.totalCount || 0;
 
-  res.json({ currentPage, nextPage, totalCount });
-});
+  // 🔵 Activity Logging
+  if (currentPage.length > 0) {
+    const performedAt = new Date().toISOString();
+    const fieldnumber = Object.keys(currentPage[0]).length;
+    const filename = 'N/A';
+    const filesize = null;
 
-app.post('/update-circles', memoryUpload.single('file'), async (req, res) => {
+    await logActivity({
+      db,
+      activity: 'Tabular view',
+      performedAt,
+      fieldnumber,
+      filename,
+      filesize,
+    });
+  }
+
+  res.json({ currentPage, nextPage, totalCount });
+}));
+
+app.post('/update-circles', memoryUpload.single('file'), wrapAsync(async (req, res) => {
   try {
     const results = [];
 
@@ -393,12 +462,24 @@ app.post('/update-circles', memoryUpload.single('file'), async (req, res) => {
         results.push([fullNumber, circle]); // Keep original number, append resolved circle
       })
       .on('end', () => {
-        stringify(results, { header: true, columns: ['series', 'circle'] }, (err, csvOutput) => {
+        stringify(results, { header: true, columns: ['series', 'circle'] }, async(err, csvOutput) => {
           if (err) {
             console.error('CSV stringify error:', err);
             return res.status(500).send('Failed to generate output CSV.');
           }
+          const performedAt = new Date().toISOString();
+          const filename = req.file.originalname;
+          const filesize = req.file.size; // optional, feel free to include it
+          const fieldnumber = 2; // We're working with 'series' and 'circle'
 
+          await logActivity({
+            db,
+            activity: 'Add circles',
+            performedAt,
+            fieldnumber,
+            filename,
+            filesize,
+          });
           res.header('Content-Type', 'text/csv');
           res.attachment('updated_circles.csv');
           res.send(csvOutput);
@@ -413,8 +494,7 @@ app.post('/update-circles', memoryUpload.single('file'), async (req, res) => {
     console.error('General file processing error:', err);
     res.status(500).send('Something went wrong while processing the file.');
   }
-});
-
+}));
 
 // Handle unmatched routes
 app.use((req, res, next) => {
