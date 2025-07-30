@@ -47,7 +47,7 @@ useEffect(()=>{
 })
   return (
     <div className=' h-[10vh] w-full flex items-center justify-between xl:p-5 bg-[#15151575] '>
-   <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full mr-2 flex justify-center items-center'>🔥Database Handler</div></Link>
+   <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full mr-2 flex justify-center items-center'>🔥Importify</div></Link>
       <div className='flex justify-center items-center gap-10'>
         <div className='text-sm md:text-2xl xl:text-2xl font-bold xl:w-auto h-[10vh] flex justify-center items-center'>{`Greetings!! ${user.email}`}</div>
         <div className=' w-[80px] h-[45px] xl:w-[70px] xl:h-[70px] rounded-full flex justify-center items-center'>
