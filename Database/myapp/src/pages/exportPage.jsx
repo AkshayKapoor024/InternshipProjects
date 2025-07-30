@@ -83,7 +83,7 @@ toast.error(`🚨 ${serverMessage}`);
       <div className='flex flex-col lg:flex-col xl:flex-row 2xl:flex-row justify-center items-center w-full gap-10'>
         <div className='mb-5 w-[90%] xl:w-[90vw] h-full rounded-3xl shadow-3xl p-6 bg-[#151515] transition-all duration-500 ease-out flex flex-col items-center'>
           <h2 className="text-[30px] md:text-[40px] xl:text-[50px] font-bold flex items-center gap-2 text-center">
-            <i className="fas fa-cloud-download-alt text-blue-300"></i> Export your desired data 📂
+            <i className="fas fa-cloud-download-alt text-blue-300"></i> Export your desired data 
           </h2>
 
           <form onSubmit={handleSubmit} className='w-full'>
@@ -104,7 +104,7 @@ toast.error(`🚨 ${serverMessage}`);
 
               <div className='flex flex-col xl:flex-row 2xl:flex-row lg:flex-col md:flex-col sm:flex-col w-full gap-5 items-center justify-center mt-4'>
                 <div className='flex flex-col w-full'>
-                  <label htmlFor="limit">📌 Select Limit:</label>
+                  <label htmlFor="limit"> Select Limit:</label>
                   <input
                     type="number"
                     name="limit"
@@ -118,7 +118,7 @@ toast.error(`🚨 ${serverMessage}`);
                 </div>
 
                 <div className='flex flex-col w-full'>
-                  <label htmlFor="category">😎 Select Category:</label>
+                  <label htmlFor="category">Select Category:</label>
                   <select
                     name="category"
                     id="category"
@@ -137,7 +137,7 @@ toast.error(`🚨 ${serverMessage}`);
                   </select>
                 </div>
                 <div className='flex flex-col w-full'>
-                  <label htmlFor="circle">😎 Select Circle:</label>
+                  <label htmlFor="circle">Select Circle:</label>
                   <select
                     name="circle"
                     id="circle"
@@ -158,7 +158,7 @@ toast.error(`🚨 ${serverMessage}`);
                 </div>
 
                 <div className='flex flex-col w-full'>
-                  <label htmlFor="status">😉 Select Status:</label>
+                  <label htmlFor="status">Select Status:</label>
                   <select
                     name="status"
                     id="status"
@@ -182,8 +182,8 @@ toast.error(`🚨 ${serverMessage}`);
                 <Typewriter
                   words={[
                     'Matching filters...',
-                    'Preparing export 😉',
-                    'Cooking format 👋',
+                    'Preparing export ',
+                    'Cooking format ',
                     'Loading...',
                     'Magic in progress...'
                   ]}
@@ -195,7 +195,7 @@ toast.error(`🚨 ${serverMessage}`);
                   delaySpeed={1500}
                 />
               ) : success ? (
-                'Download File 🚀'
+                'Download File '
               ) : (
                 'Apply filters and find 🔍'
               )}
