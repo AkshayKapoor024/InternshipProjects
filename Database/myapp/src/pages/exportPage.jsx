@@ -42,7 +42,7 @@ export default function ExportPage() {
 
     try {
 
-      const response = await axios.post(`http://localhost:3000/export/getFiles`, formData, {
+      const response = await axios.post(`https://importify.onrender.com/export/getFiles`, formData, {
         responseType: 'blob'
       });
 
