@@ -36,7 +36,7 @@ export default function ImportPage() {
             data.append('file', formData.file);  // 🔄 changed key from `datafile` to `file`
 
             const response = await axios.post(
-                'http://localhost:3000/update-circles',
+                'https://importify.onrender.com/update-circles',
                 data,
                 {
                     responseType: 'blob',  // 📥 expect downloadable file
