@@ -41,7 +41,7 @@ export default function ImportPage() {
             data.append('type', formData.type);
             data.append('datafile', formData.file);
 
-            const response = await axios.post(`http://localhost:3000/import/addFiles`, data, {
+            const response = await axios.post(`https://importify.onrender.com/import/addFiles`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
