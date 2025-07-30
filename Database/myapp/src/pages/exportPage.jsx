@@ -54,7 +54,8 @@ export default function ExportPage() {
       toast.success(`${fileType.toUpperCase()} file is being downloaded!`);
     } catch (error) {
       console.error(error);
-      toast.error(`Error: No such record exist for the following filters`);
+      const serverMessage = error.response?.data?.message || error.message;
+toast.error(`🚨 ${serverMessage}`);
     } finally {
       setloading(false);
     }
