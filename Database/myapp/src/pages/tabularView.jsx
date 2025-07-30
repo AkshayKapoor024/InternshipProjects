@@ -94,7 +94,7 @@ toast.error(`🚨 ${serverMessage}`);
                     <p className="mt-2 text-white xl:text-2xl font-bold text-center">Choose your filters and start exploring 🎉</p>
 
                     <div className="text-white xl:space-y-4 font-bold text-xl xl:w-full">
-                        <label htmlFor="limit">😉 Select Field Size:</label>
+                        <label htmlFor="limit"> Select Field Size:</label>
                         <select
                             id="limit"
                             className="p-2  h-16 bg-[#222222] text-xl shadow-md m-2"
@@ -109,7 +109,7 @@ toast.error(`🚨 ${serverMessage}`);
 
                         <div className="flex gap-4 flex-col xl:flex-row xl:gap-5 items-center justify-center">
                             <div className="flex flex-col w-[60%] xl:w-[20%]">
-                                <label htmlFor="category">😎 Select Category:</label>
+                                <label htmlFor="category">Select Category:</label>
                                 <select
                                     name="category"
                                     id="category"
@@ -128,7 +128,7 @@ toast.error(`🚨 ${serverMessage}`);
                                 </select>
                             </div>
                             <div className='flex flex-col w-[60%] xl:w-[30%]'>
-                                <label htmlFor="circle">😎 Select Circle:</label>
+                                <label htmlFor="circle"> Select Circle:</label>
                                 <select
                                     name="circle"
                                     id="circle"
@@ -148,7 +148,7 @@ toast.error(`🚨 ${serverMessage}`);
                                 </select>
                             </div>
                             <div className="flex flex-col w-[60%] xl:w-[20%]">
-                                <label htmlFor="status">😉 Select Status:</label>
+                                <label htmlFor="status"> Select Status:</label>
                                 <select
                                     name="status"
                                     id="status"
@@ -172,8 +172,8 @@ toast.error(`🚨 ${serverMessage}`);
                             <Typewriter
                                 words={[
                                     'Matching filters...',
-                                    'Preparing results 😉',
-                                    'Processing request 👋',
+                                    'Preparing results ',
+                                    'Processing request ',
                                     'Loading...',
                                     'Magic in progress...'
                                 ]}
@@ -184,7 +184,7 @@ toast.error(`🚨 ${serverMessage}`);
                                 deleteSpeed={50}
                                 delaySpeed={1500}
                             />
-                        ) : success ? 'Data Loaded 🧮' : 'Apply filters and find 🔍'}
+                        ) : success ? 'Data Loaded ' : 'Apply filters and find 🔍'}
                     </button>
 
                     <div className="m-2 text-center text-xl font-bold">
