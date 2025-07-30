@@ -3,7 +3,7 @@ import { useNavigate ,Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
-import Navbar from '../../components/navbar';
+import Navbar from '../components/navbar';
 export default function Homepage() {
   const [user, setUser] = useState({})
   const navigate = useNavigate()
