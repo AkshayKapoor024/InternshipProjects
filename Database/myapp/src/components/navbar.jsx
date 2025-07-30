@@ -3,7 +3,11 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+
 export default function Navbar() {
+  const hasShownToast = useRef(false);
+
   const [user, setUser] = useState({})
     const [userLoaded, setUserLoaded] = useState(false);
     const [istrue,setTrue]=useState(false)
@@ -21,24 +25,28 @@ export default function Navbar() {
     }
   };
   useEffect(() => {
-    const auth = getAuth();
+  const auth = getAuth();
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user)
-         setUserLoaded(true);
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+      setUserLoaded(true);
 
-        toast.success(`Logged in as ${user.email}`)
+      if (!hasShownToast.current) {
+        toast.success(`Logged in as ${user.email}`);
         console.log('🔥 Logged-in user:', user);
-      } else {
-        toast.error('Log in first to access this section')
-        navigate('/login')
-        console.log('⚠️ No user is currently signed in.');
+        hasShownToast.current = true;
       }
-    });
+    } else {
+      toast.error('Log in first to access this section');
+      console.log('⚠️ No user is currently signed in.');
+      navigate('/login');
+    }
+  });
 
-    return () => unsubscribe(); // Cleanup listener on unmount
-  }, []);
+  return () => unsubscribe();
+}, []);
+
 useEffect(()=>{
   setTimeout(() => {
     setTrue(true)
