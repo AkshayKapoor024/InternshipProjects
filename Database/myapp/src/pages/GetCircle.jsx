@@ -68,7 +68,7 @@ toast.error(`🚨 ${serverMessage}`);
             <Navbar />
             <div className='text-4xl xl:text-[60px] font-bold '>
                 <Typewriter
-                    words={['Database Handler 😉']}
+                    words={[' Importify - DB Handler']}
                     loop={1}
                     cursorStyle="|"
                     typeSpeed={70}
@@ -82,12 +82,12 @@ toast.error(`🚨 ${serverMessage}`);
                     bg-[#00000061]
                   transition-all duration-500 ease-out cursor-pointer hover:mx-5 flex flex-col justify-start items-center'>
                     <h2 className="text-4xl xl:text-[50px] h-[10vh] font-bold flex items-center gap-2">
-                        <i className="fas fa-cloud-download-alt text-blue-300"></i> Import a file to get CSV with Circles📦
+                        <i className="fas fa-cloud-download-alt text-blue-300"></i> Import a file to get CSV with Circles
                     </h2>
                     <form action="" method='post' onSubmit={handleSubmit} className='w-[100%] flex flex-col justify-center items-center xl:w-auto'>
 
                         <p className="mt-2 text-white text-sm md:text-lg lg:text-xl text-center xl:text-2xl h-[10vh] flex items-center font-semibold">
-                            Upload a JSON , CSV or a SQL File to start importing 💵
+                            Upload a JSON , CSV or a SQL File to start importing 
                         </p>
                         <div className="mt-4 text-white space-y-1 text-lg flex flex-col gap-5 justify-evenly font-semibold h-[20vh] w-[90%] mb-10">
                             <select
@@ -106,14 +106,14 @@ toast.error(`🚨 ${serverMessage}`);
                         <button type="submit" aria-label="Submit file for processing and download" className="mt-6 px-6 py-2 rounded-lg bg-cyan-600 hover:bg-blue-400  text-white font-semibold transition xl:w-[50%] h-[15%] text-xl shadow-md">
                             {loading === true ?
                                 <Typewriter
-                                    words={['Taking your files to cloud...', 'Loading your file 😉....', 'Preparing uploads👋....', 'Cooking new uploads...', 'Loading...', 'Please Wait a few moments....', 'Magic is happening....']}
+                                    words={['Taking your files to cloud...', 'Loading your file ....', 'Preparing uploads....', 'Cooking new uploads...', 'Loading...', 'Please Wait a few moments....', 'Magic is happening....']}
                                     loop={0}
                                     cursorStyle="|"
                                     typeSpeed={70}
                                     deleteSpeed={50}
                                     delaySpeed={1500}
                                 />
-                                : 'Import Now 🚀'
+                                : 'Import Now '
                             }
                         </button>
                         {loading === true ? <div className='m-2 text-red-600'>Please wait a few moments file is being loaded on server!</div> : ''}
