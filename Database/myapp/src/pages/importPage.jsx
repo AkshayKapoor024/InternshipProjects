@@ -3,7 +3,7 @@ import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-import Navbar from '../../components/navbar';
+import Navbar from '../components/navbar';
 export default function ImportPage() {
     const navigate = useNavigate()
     const [formData, setForm] = useState({
