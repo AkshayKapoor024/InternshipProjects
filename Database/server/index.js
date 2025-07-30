@@ -162,7 +162,10 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
       res.send(`✅ CSV Upload Successful! ${rows.length} rows inserted.`);
     } catch (err) {
       console.error(`❌ CSV Import Error: ${err.message}`);
-      res.status(err.status || 500).send(`Import failed: ${err.message}`);
+     res.status(err.status || 500).json({
+  error: true,
+  message: err.message || 'Unknown import error'
+});
     }
   }
 
@@ -199,7 +202,10 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
       res.send(`✅ JSON Upload Successful! ${rows.length} rows inserted.`);
     } catch (err) {
       console.log(err)
-      res.status(err.status || 500).send(`Import failed: ${err.message}`);
+      res.status(err.status || 500).json({
+  error: true,
+  message: err.message || 'Unknown import error'
+});
     }
 
   }
@@ -210,7 +216,10 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
       res.send(`✅ SQL Executed Successfully!`);
     } catch (err) {
       console.log(err)
-      res.status(err.status || 500).send(`SQL Error: ${err.message}`);
+      res.status(err.status || 500).json({
+  error: true,
+  message: err.message || 'Unknown import error'
+});
     }
 
   }
