@@ -1,6 +1,6 @@
 export default function TableRow({ row }) {
   return (
-    <div className="grid grid-cols-12 h-[5vh] bg-[#f7f7f7] hover:bg-[#eaeaea] transition duration-200">
+    <div className="grid grid-cols-12 h-[5vh] transition duration-200">
       <div className="col-span-1 flex justify-center items-center text-sm">{row.id}</div>
       <div className="col-span-1 flex justify-center items-center text-sm">{row.category}</div>
       <div className="col-span-1 flex justify-center items-center text-sm">{row.mobile}</div>
