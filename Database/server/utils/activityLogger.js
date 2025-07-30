@@ -6,10 +6,11 @@ module.exports.logActivity = async ({db,
   filesize = null,
 }) => {
   const query = `
-    INSERT INTO ActivityLogs (activity, performed_at, fieldnumber, filename  )
-    VALUES (?, ?, ?, ?)
-  `;
-  const values = [activity, performedAt, fieldnumber, filename];
+  INSERT INTO ActivityLogs (activity, performed_at, fieldnumber, filename, filesize)
+  VALUES (?, ?, ?, ?, ?)
+`;
+
+  const values = [activity, performedAt, fieldnumber, filename, filesize];
   try {
     await db.execute(query, values);
     console.log(`📘 Logged activity: ${activity}`);
