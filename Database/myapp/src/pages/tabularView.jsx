@@ -41,7 +41,7 @@ export default function Table() {
         setSuccess(false);
 
         try {
-            const res = await axios.post('http://localhost:3000/data/query', {
+            const res = await axios.post('https://importify.onrender.com/data/query', {
                 ...filters,
                 limit: pageSize,
                 offset,
