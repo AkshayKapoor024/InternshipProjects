@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { saveAs } from 'file-saver';
-import Navbar from '../../components/navbar';
+import Navbar from '../components/navbar';
 export default function ExportPage() {
   const navigate = useNavigate();
   const [formData, setForm] = useState({
