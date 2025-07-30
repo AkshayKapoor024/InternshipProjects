@@ -57,7 +57,8 @@ export default function ImportPage() {
             toast.success(`File processed and downloaded successfully`);
         } catch (error) {
             console.error(error);
-            toast.error(`Error: ${error.message}`);
+            const serverMessage = error.response?.data?.message || error.message;
+toast.error(`🚨 ${serverMessage}`);
         } finally {
             setloading(false);
         }
