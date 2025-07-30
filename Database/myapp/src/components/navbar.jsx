@@ -33,7 +33,6 @@ export default function Navbar() {
       setUserLoaded(true);
 
       if (!hasShownToast.current) {
-        toast.success(`Logged in as ${user.email}`);
         console.log('🔥 Logged-in user:', user);
         hasShownToast.current = true;
       }
