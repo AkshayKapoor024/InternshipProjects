@@ -433,7 +433,7 @@ app.post('/data/query', wrapAsync(async (req, res) => {
     const performedAt = new Date().toISOString();
     const fieldnumber = currentPage.length;
     const filename = 'N/A';
-    const filesize = null;
+    const filesize = 0;
 
     await logActivity({
       db,
