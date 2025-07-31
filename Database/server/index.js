@@ -496,6 +496,35 @@ app.post('/update-circles', memoryUpload.single('file'), wrapAsync(async (req, r
   }
 }));
 
+app.post('/activity', wrapAsync(async (req, res) => {
+  const { limit, offset, preload = false } = req.body;
+
+  const query = `
+    SELECT activity, performed_at, fieldnumber, filename, id, filesize
+    FROM activity_logs
+    ORDER BY performed_at DESC
+    LIMIT ? OFFSET ?
+  `;
+  const currentValues = [parseInt(limit), parseInt(offset)];
+  const [currentPage] = await db.query(query, currentValues);
+
+  let nextPage = [];
+  if (preload) {
+    const nextOffset = offset + parseInt(limit);
+    const nextValues = [parseInt(limit), nextOffset];
+    const [nextChunk] = await db.query(query, nextValues);
+    nextPage = nextChunk;
+  }
+
+  const countQuery = `SELECT COUNT(*) AS totalCount FROM activity_logs`;
+  const [countRow] = await db.query(countQuery);
+  const totalCount = countRow[0]?.totalCount || 0;
+
+  res.json({ currentPage, nextPage, totalCount });
+}));
+
+
+
 // Handle unmatched routes
 app.use((req, res, next) => {
   res.status(404).send('Route not found');
