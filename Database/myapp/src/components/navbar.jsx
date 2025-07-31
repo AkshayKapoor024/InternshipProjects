@@ -53,24 +53,31 @@ useEffect(()=>{
 
 })
   return (
-    <div className=' h-[10vh] w-full flex items-center justify-between xl:p-5 bg-[#15151575] '>
-   <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full mr-2 flex justify-center items-center'>🔥Importify</div></Link>
-      <div className='flex justify-center items-center gap-10'>
-        <div className='text-sm md:text-2xl xl:text-2xl font-bold xl:w-auto h-[10vh] flex justify-center items-center'>{`Greetings!! ${user.email}`}</div>
-        <div className=' w-[80px] h-[45px] xl:w-[70px] xl:h-[70px] rounded-full flex justify-center items-center'>
-          <img width="48" height="48" src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="user-male-circle--v1"/>
+      <div className=' h-[10vh] w-full flex items-center  xl:p-5 bg-[#15151575] gap-[30vw] md:gap-0 lg:gap-0 xl:gap-[30vw] 2xl:gap-0 overflow-x-hidden'>
+    <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full p-2 mx-5 md:p-0 md:mx-0 xl:p-0 xl:mx-0 bg-red-100 flex justify-center items-center'>🔥Database Handler</div></Link>
+        <div className='flex justify-evenly w-full items-center '>
+          <div className='text-sm hidden md:text-2xl xl:text-2xl font-bold xl:w-auto h-[10vh] bg-red-100 md:flex lg:flex xl:flex justify-center items-center'>{`Greetings!! ${user.email}`}</div>
+          <div className=' w-[75px] h-[45px]  lg:w-[100px] lg:h-[100px] xl:w-[70px] xl:h-[70px] rounded-full flex justify-center items-center gap-5'>
+            <img
+              src={user.photoURL? user.photoURL: "https://img.daisyui.com/images/profile/demo/yellingwoman@192.webp"
+              }
+              alt={user?.displayName || 'User'}
+              className="w-full h-full rounded-full object-cover"
+            />
+          
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className=" w-[70px] h-[55px] lg:w-[100px] lg:h-[100px] xl:w-[70px] xl:h-[70px] btn bg-gray-800  rounded-full xl:m-1 text-4xl">📂</div>
+            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-2xl text-xl font-bold ">
+              <Link to='/import'><li><a>Import a file 📂</a></li></Link>
+              <Link to='/export'><li><a>Export a file 🥸</a></li></Link>
+              <Link to='/table'><li><a>Tabular view👌</a></li></Link>
+              <Link to='/getCircle'><li><a>Add Circle©️</a></li></Link>
+              <Link to='/activity'><li><a>Activity Log📝</a></li></Link>
+              <Link to=''><li onClick={handleLogout}><a>Logout 👋</a></li></Link>
+            </ul>
+          </div>
+          </div>
+          </div>
         </div>
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn bg-gray-800 h-16 w-16  rounded-full xl:m-1 text-4xl">📂</div>
-          <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-2xl text-xl font-bold ">
-            <Link to='/import'><li><a>Import a file 📂</a></li></Link>
-            <Link to='/export'><li><a>Export a file 🥸</a></li></Link>
-            <Link to='/table'><li><a>Tabular view👌</a></li></Link>
-            <Link to='/getCircle'><li><a>Add Circle©️</a></li></Link>
-            <Link to=''><li onClick={handleLogout}><a>Logout 👋</a></li></Link>
-          </ul>
-        </div>
-        </div>
-      </div>
-  )
+    )
 }
