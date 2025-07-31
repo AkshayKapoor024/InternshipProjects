@@ -516,7 +516,7 @@ app.post('/activity', wrapAsync(async (req, res) => {
     nextPage = nextChunk;
   }
 
-  const countQuery = `SELECT COUNT(*) AS totalCount FROM activity_logs`;
+  const countQuery = `SELECT COUNT(*) AS totalCount FROM ActivityLogs`;
   const [countRow] = await db.query(countQuery);
   const totalCount = countRow[0]?.totalCount || 0;
 
