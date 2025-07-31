@@ -53,9 +53,9 @@ useEffect(()=>{
 
 })
   return (
-      <div className=' h-[10vh] w-full flex items-center  xl:p-5 bg-[#15151575] gap-[30vw] md:gap-0 lg:gap-0 xl:gap-[30vw] 2xl:gap-[50vw] overflow-hidden'>
-    <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full p-2 mx-5 md:p-0 md:mx-0 xl:p-0 xl:mx-0 flex justify-center items-center'>🔥Database Handler</div></Link>
-        <div className='flex justify-evenly w-full items-center '>
+      <div className=' h-[10vh] w-full flex items-center  xl:p-5 bg-[#15151575] gap-[30vw] md:gap-0 lg:gap-0 xl:gap-[30vw] 2xl:gap-[30vw] overflow-hidden'>
+    <Link to='/'><div className='text-sm md:text-2xl xl:text-3xl font-bold h-full p-2 mx-5 md:p-0 md:mx-0 xl:p-0 xl:mx-0 xl:w-[20vw] flex justify-center items-center'>🔥Database Handler</div></Link>
+        <div className='flex justify-evenly w-full items-center gap-10'>
           <div className='text-sm hidden md:text-2xl xl:text-2xl font-bold xl:w-auto h-[10vh] md:flex lg:flex xl:flex justify-center items-center'>{`Greetings!! ${user.email}`}</div>
           <div className=' w-[75px] h-[45px]  lg:w-[100px] lg:h-[100px] xl:w-[70px] xl:h-[70px] rounded-full flex justify-center items-center gap-5'>
             <img
