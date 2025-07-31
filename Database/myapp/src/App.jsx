@@ -10,6 +10,7 @@ import ExportPage from './pages/exportPage';
 import Table from './pages/tabularView';
 import GetCircle from './pages/GetCircle';
 import Login from './pages/Login';
+import ActivityLogs from './pages/ActivityLogs';
 // ✅ MODULAR Firebase imports
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -50,6 +51,7 @@ const [checkingAuth, setCheckingAuth] = useState(true); // NEW
         <Route path='/export' element={<ExportPage />} />
         <Route path='/table' element={<Table />} />
         <Route path='/getCircle' element={<GetCircle />} />
+        <Route path='/activity' element={<ActivityLogs/>}/>
         <Route
   path="/login"
   element={
