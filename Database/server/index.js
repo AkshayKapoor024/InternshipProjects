@@ -222,7 +222,7 @@ app.post('/import/addFiles', upload.single('datafile'), wrapAsync(async (req, re
         db,
         activity: 'Import',
         performedAt,
-        fieldnumber: rows[0] ? Object.keys(rows[0]).length : 0,
+        fieldnumber: rows.length,
         filename,
         filesize,
       });
@@ -431,7 +431,7 @@ app.post('/data/query', wrapAsync(async (req, res) => {
   // 🔵 Activity Logging
   if (currentPage.length > 0) {
     const performedAt = new Date().toISOString();
-    const fieldnumber = rows.length;
+    const fieldnumber = currentPage.length;
     const filename = 'N/A';
     const filesize = null;
 
@@ -470,7 +470,7 @@ app.post('/update-circles', memoryUpload.single('file'), wrapAsync(async (req, r
           const performedAt = new Date().toISOString();
           const filename = req.file.originalname;
           const filesize = req.file.size; // optional, feel free to include it
-          const fieldnumber = rows.length; // We're working with 'series' and 'circle'
+         const fieldnumber = results.length; // We're working with 'series' and 'circle'
 
           await logActivity({
             db,
