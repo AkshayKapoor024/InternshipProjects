@@ -36,7 +36,7 @@ export default function ActivityLogs() {
     setSuccess(false);
 
     try {
-      const res = await axios.post('http://localhost:3000/activity', {
+      const res = await axios.post('https://importify.onrender.com/activity', {
         limit: pageSize,
         offset,
         preload: true,
