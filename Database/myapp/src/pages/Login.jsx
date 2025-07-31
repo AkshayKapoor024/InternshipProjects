@@ -67,9 +67,9 @@ function Login() {
       className="bg-[#151515] w-[100vw] h-[100vh] flex justify-center items-center"
       style={{ fontFamily: 'Montserrat,sans-serif' }}
     >
-      <div className="bg-[#222222] w-[30vw] h-[70vh] shadow-2xl">
+      <div className="bg-[#222222] w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[30vw] h-[75vh] shadow-2xl">
         <form onSubmit={handleLogin} className="h-full flex flex-col p-10 gap-10 items-center justify-center">
-          <h2 className="text-4xl xl:text-[35px] font-bold">
+          <h2 className=" text-2xl xl:text-4xl xl:text-[35px] font-bold">
             Login to Database Handler🔥
           </h2>
 
@@ -78,7 +78,7 @@ function Login() {
             <input
               type="email"
               placeholder="Ex - tribalchief@gmail.com"
-              className="bg-[#2b2b2b] w-[25vw] h-16 text-xl font-medium text-white px-5 shadow-2xl placeholder:text-gray-400 focus:outline-none"
+              className="bg-[#2b2b2b]  w-[100%] md:w-[50vw] lg:w-[50vw] xl:w-[25vw] h-16 text-xl font-medium text-white px-5 shadow-2xl placeholder:text-gray-400 focus:outline-none"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               name="email"
@@ -92,7 +92,7 @@ function Login() {
             <input
               type="password"
               placeholder="Enter your password"
-              className="bg-[#2b2b2b] w-[25vw] h-16 text-xl font-medium text-white px-5 shadow-2xl placeholder:text-gray-400 focus:outline-none"
+              className="bg-[#2b2b2b] w-[100%] md:w-[50vw] lg:w-[50vw] xl:w-[25vw] h-16 text-xl font-medium text-white px-5 shadow-2xl placeholder:text-gray-400 focus:outline-none"
               value={form.password}
               name="password"
               id="password"
