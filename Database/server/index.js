@@ -501,7 +501,7 @@ app.post('/activity', wrapAsync(async (req, res) => {
 
   const query = `
     SELECT activity, performed_at, fieldnumber, filename, id, filesize
-    FROM activity_logs
+    FROM ActivityLogs
     ORDER BY performed_at DESC
     LIMIT ? OFFSET ?
   `;
